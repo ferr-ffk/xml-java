@@ -1,5 +1,6 @@
 package util;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
@@ -15,10 +16,20 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import model.Pessoa;
 
 public class XMLUtil {
     private static String caminhoArquivo = "tmp.xml";
 
+    /**
+     * Salva um objeto o em um arquivo XML
+     * 
+     * @param o O objeto para ser salvo
+     */
     public static void salvarObjetoEmArquivo(Object o) {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
@@ -53,6 +64,78 @@ public class XMLUtil {
         });
 
         salvarXML(doc, caminhoArquivo);
+    }
+
+    /**
+     * Salva um objeto o em um arquivo XML de caminho fornecido
+     * 
+     * @param o O Objeto para ser salvo
+     * @param caminhoArquivo O caminho do arquivo para ser salvo
+     */
+    public static void salvarObjetoEmArquivo(Object o, String caminhoArquivo) {
+        XMLUtil.caminhoArquivo = caminhoArquivo;
+
+        salvarObjetoEmArquivo(o);
+    }
+
+    @Deprecated
+    public static Object obterObjetoEmArquivo(String caminhoArquivo, @SuppressWarnings("rawtypes") Class classeObjeto) {
+        Object obj = new Object();
+
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            Document document = builder.parse(caminhoArquivo);
+
+            document.getDocumentElement().normalize();
+
+            Element elementoRaiz = document.getDocumentElement();
+
+            NodeList elementosFilhoRaiz = elementoRaiz.getChildNodes();
+
+            for (int i = 0; i < elementosFilhoRaiz.getLength(); i++) {
+                Node iesimoElemento = elementosFilhoRaiz.item(i);
+
+                String nomeIesimoElemento = iesimoElemento.getNodeName();
+                String valorIesimoElemento = iesimoElemento.getTextContent();
+
+                if (nomeIesimoElemento == "#text") {
+                    continue;
+                }
+
+                // System.out.println(nomeIesimoElemento + ": " + valorIesimoElemento);
+
+                /* 
+                TODO Talvez seria melhor fazer algo mais polido, que identificasse os campos de um objeto qualquer e fizesse um set nele com base
+                naqueles valores, mas não acho que isso é possível em Java, então a partir daqui eu vou assumir que o método vai ser utilizado para
+                obter uma pessoa
+                */
+
+                // FIXME A partir daqui isso não funciona!!
+
+                Field f = classeObjeto.getDeclaredField(nomeIesimoElemento);
+                f.setAccessible(true);
+
+                f.set(obj, valorIesimoElemento);
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return obj;
     }
 
     private static HashMap<String, Object> obterListaDeCampos(Object o) {

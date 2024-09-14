@@ -3,7 +3,7 @@ package model;
 import java.util.Objects;
 
 public class Pessoa {
-    private int idPessoa;
+    private String idPessoa;
     private String nome;
     private String sobrenome;
     private String email;
@@ -27,7 +27,7 @@ public class Pessoa {
     }
 
     
-    public Pessoa(int idPessoa, String nome, String sobrenome, String email, String logradouro, String numero, String bairro, String cidade, String estado, String pais, String nacionalidade) {
+    public Pessoa(String idPessoa, String nome, String sobrenome, String email, String logradouro, String numero, String bairro, String cidade, String estado, String pais, String nacionalidade) {
         this.idPessoa = idPessoa;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -42,11 +42,11 @@ public class Pessoa {
     }
 
     // Getters e Setters
-    public int getIdPessoa() {
+    public String getIdPessoa() {
         return idPessoa;
     }
 
-    public void setIdPessoa(int idPessoa) {
+    public void setIdPessoa(String idPessoa) {
         this.idPessoa = idPessoa;
     }
 

@@ -6,5 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
         XMLUtil.salvarObjetoEmArquivo(pessoa);
+
+        Object novaPessoa = XMLUtil.obterObjetoEmArquivo("tmp.xml", Pessoa.class);
+
+        System.out.println(novaPessoa);
     }
 }
