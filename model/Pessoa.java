@@ -18,6 +18,14 @@ public class Pessoa {
     
     public Pessoa() {}
 
+    public Pessoa(String nome, String sobrenome, String email, String logradouro, String numero) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
+        this.logradouro = logradouro;
+        this.numero = numero;
+    }
+
     
     public Pessoa(int idPessoa, String nome, String sobrenome, String email, String logradouro, String numero, String bairro, String cidade, String estado, String pais, String nacionalidade) {
         this.idPessoa = idPessoa;
