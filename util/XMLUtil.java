@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class XMLUtil {
+public class XMLUtil<T> {
     private static String caminhoArquivo = "tmp.xml";
 
     /**
@@ -76,9 +76,14 @@ public class XMLUtil {
         salvarObjetoEmArquivo(o);
     }
 
-    @Deprecated
-    public static Object obterObjetoEmArquivo(String caminhoArquivo, @SuppressWarnings("rawtypes") Class classeObjeto) {
-        Object obj = new Object();
+    public T obterObjetoEmArquivo(String caminhoArquivo, Class<T> classeObjeto) {
+        T obj = null;
+
+        try {
+            obj = classeObjeto.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -104,16 +109,12 @@ public class XMLUtil {
 
                 // System.out.println(nomeIesimoElemento + ": " + valorIesimoElemento);
 
-                /* 
-                TODO Talvez seria melhor fazer algo mais polido, que identificasse os campos de um objeto qualquer e fizesse um set nele com base
-                naqueles valores, mas não acho que isso é possível em Java, então a partir daqui eu vou assumir que o método vai ser utilizado para
-                obter uma pessoa
-                */
-
-                // FIXME A partir daqui isso não funciona!!
-
                 Field f = classeObjeto.getDeclaredField(nomeIesimoElemento);
                 f.setAccessible(true);
+
+                if (valorIesimoElemento.toLowerCase().equals("null")) {
+                    valorIesimoElemento = null;
+                }
 
                 f.set(obj, valorIesimoElemento);
             }
