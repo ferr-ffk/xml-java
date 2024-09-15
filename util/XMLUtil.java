@@ -52,7 +52,7 @@ public class XMLUtil<T> {
         // com o valor daquele campo e adiciona no xml
         camposValoresObjeto.forEach((nomeCampo, valorCampo) -> {
             if (valorCampo == null) {
-                valorCampo = "NULL";
+                valorCampo = "";
             }
 
             Element elemento = doc.createElement(nomeCampo);
@@ -112,7 +112,7 @@ public class XMLUtil<T> {
                 Field f = classeObjeto.getDeclaredField(nomeIesimoElemento);
                 f.setAccessible(true);
 
-                if (valorIesimoElemento.toLowerCase().equals("null")) {
+                if (valorIesimoElemento.toLowerCase().equals("")) {
                     valorIesimoElemento = null;
                 }
 
