@@ -70,7 +70,7 @@ public class XMLUtil<T> {
      * @param o O Objeto para ser salvo
      * @param caminhoArquivo O caminho do arquivo para ser salvo
      */
-    public static void salvarObjetoEmArquivo(Object o, String caminhoArquivo) {
+    public void salvarObjetoEmArquivo(Object o, String caminhoArquivo) {
         XMLUtil.caminhoArquivo = caminhoArquivo;
 
         salvarObjetoEmArquivo(o);
