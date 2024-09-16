@@ -28,7 +28,7 @@ public class XMLUtil<T> {
      * 
      * @param o O objeto para ser salvo
      */
-    public static void salvarObjetoEmArquivo(Object o) {
+    public void salvarObjetoEmArquivo(Object o) {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
 
