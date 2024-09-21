@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class XMLUtil<T> {
+public class XMLUtil {
     private static String caminhoArquivo = "tmp.xml";
 
     /**
@@ -28,7 +28,7 @@ public class XMLUtil<T> {
      * 
      * @param o O objeto para ser salvo
      */
-    public void salvarObjetoEmArquivo(Object o) {
+    public static void salvarObjetoEmArquivo(Object o) {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
 
@@ -76,7 +76,7 @@ public class XMLUtil<T> {
         salvarObjetoEmArquivo(o);
     }
 
-    public T obterObjetoEmArquivo(String caminhoArquivo, Class<T> classeObjeto) {
+    public static <T> T obterObjetoEmArquivo(String caminhoArquivo, Class<T> classeObjeto) {
         T obj = null;
 
         try {
@@ -193,14 +193,14 @@ public class XMLUtil<T> {
     /**
      * @return String return the caminhoArquivo
      */
-    public String getCaminhoArquivo() {
+    public static String getCaminhoArquivo() {
         return caminhoArquivo;
     }
 
     /**
      * @param caminhoArquivo the caminhoArquivo to set
      */
-    public void setCaminhoArquivo(String caminhoArquivo) {
+    public static void setCaminhoArquivo(String caminhoArquivo) {
         XMLUtil.caminhoArquivo = caminhoArquivo;
     }
 
